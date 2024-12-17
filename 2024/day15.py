@@ -8,6 +8,7 @@ import time
 import numpy as np
 import scipy.optimize as opt
 import matplotlib.pyplot as plt
+from os import system
 
 def check(y,x,dir):
     if matrix[y][x] == '#':
@@ -147,7 +148,6 @@ for y in range(len(matrix)):
     for x in range(len(matrix[0])):
         if matrix[y][x] == 'O':
             acc += 100*y+x
-print('part 1: '+str(acc))
 
 section = 0
 matrix = []
@@ -178,6 +178,10 @@ for i,l in enumerate(lin):
     if section == 1:
         for j, m in enumerate(l):
             move(m)
+            system('cls')
+            for y in range(len(matrix)):
+                print(''.join(matrix[y]))
+            time.sleep(0.1)
             sums = [0,0]
             for mat in matrix:
                 sums[0] += mat.count('[')
@@ -190,6 +194,7 @@ for y in range(len(matrix)):
     for x in range(len(matrix[0])):
         if matrix[y][x] == '[':
             acc2 += 100*y+x
+print('part 1: '+str(acc))
 print('part 2: '+str(acc2))
 
 end = time.time()
