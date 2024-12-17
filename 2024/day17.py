@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 def adv(operand):
     combo = list(range(4))+list(registers)
-    registers[0] = (registers[0])//(2**combo[operand])
+    registers[0] = (registers[0])>>combo[operand]
 
 
 def bxl(operand):
@@ -41,12 +41,12 @@ def out(operand):
 
 def bdv(operand):
     combo = list(range(4))+list(registers)
-    registers[1] = (registers[0])//(2**combo[operand])
+    registers[1] = (registers[0])>>combo[operand]
 
 
 def cdv(operand):
     combo = list(range(4))+list(registers)
-    registers[2] = (registers[0])//(2**combo[operand])
+    registers[2] = (registers[0])>>combo[operand]
 
 
 day = 17
@@ -68,45 +68,53 @@ while program_counter < len(program):
         ops[program[program_counter]](program[program_counter+1])
     except:
         raise Exception(
-            'Shit! Op='+str(program[program_counter])+' operand='+str(program[program_counter+1]))
+            'Error! Op='+str(program[program_counter])+' operand='+str(program[program_counter+1]))
     if program_counter == old_program_counter:
         program_counter += 2
 print('part 1: '+','.join(map(str, output)))
-# print('part 2: '+str(acc2))
 
-for i in range(35184372088832, 281474976710656):
-    A = i
-    output.clear()
-    # translated program
-    while A != 0:
-        B = ((A % 8) ^ 3)
-        B = (B ^ (A//(2**B))) ^ 5
-        if A == i:
-            if str(B % 8) == '2':
-                print(str(i) + ': ' + str(B) + ' ' + str(B % 8))
-                raise Exception('a')
-        A = A//(8)
-        # output.append(B % 8)
-    # break
+targets = [7, 1, 4, 6, 2, 0, 1, 7, 5, 6, 4, 0, 0, 0, 6, 5][::-1] #reverted and XORed with 5, orig. program = 2,4,1,3,7,5,4,2,0,3,1,5,5,5,3,0
+results = []
 
-    # registers[0] = i
-    # program_counter = 0
-    # output.clear()
-    # while program_counter < len(program):
-    #     old_program_counter = program_counter
-    #     try:
-    #         ops[program[program_counter]](program[program_counter+1])
-    #     except:
-    #         raise Exception(
-    #             'Error! Op='+str(program[program_counter])+' operand='+str(program[program_counter+1]))
-    #     if program_counter == old_program_counter:
-    #         program_counter += 2
-    # print(','.join(map(str, output)))
-    # break
+def explore(acc, targets):
+    if len(targets) == 0:
+        results.append(acc)
+    else:
+        for i in range(8):
+            A = (acc<<3)+i
+            B = i^3
+            B = (B ^ (A>>B))%8
+            if B == targets[0]:
+                explore(A, targets[1:])
 
-    # if ','.join(map(str, output)) == '2,4,1,3,7,5,4,2,0,3,1,5,5,5,3,0':
-    #     print('part 2: '+str(i))
-    #     break
+explore(0, targets)
+print('part 2: '+str(sorted(results)[0]))
+
+
+#     #001 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000
+#     #B = 011, 2**B = 8, A//8=A>>3, (B ^ (A//(2**B))) = 001 000 000 000 000 000 000 000 000 000 000 000 000 000 011,
+#     #
+#     #001 000 000 000 000 000 000 000 000 000 000 000 000 000 000 100
+#     #B=111, B^(A>>7) = 001 000 000 000 000 000 000 000 000 000 000 00 111,^101 = 010
+#     #
+#     #001 000 000 000 000 000 000 000 000 000 000 000 000 000 010 100
+#     #B=001, B^(A>>1) = 100 000 000 000 000 000 000 000 000 000 000 000 000 001 011 = 3
+#     #
+#     #
+#     #110| 001| 001|...
+#     # 5 |  6 |  0 |...
+
+
+#     # translated program
+#     while A != 0:
+#         B = ((A % 8) ^ 3)
+#         B = (B ^ (A>>B)) 
+#         B = B^5
+#         if A == i:
+#             print(str(i) + ': ' + str(B) + ' ' + str(B % 8))
+#         A = A//(8)
+#         # output.append(B % 8)
+#     # break
 
 end = time.time()
 print(end - start)
