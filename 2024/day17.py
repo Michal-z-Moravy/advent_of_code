@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 def adv(operand):
     combo = list(range(4))+list(registers)
-    registers[0] = (registers[0])>>combo[operand]
+    registers[0] = (registers[0]) >> combo[operand]
 
 
 def bxl(operand):
@@ -41,12 +41,12 @@ def out(operand):
 
 def bdv(operand):
     combo = list(range(4))+list(registers)
-    registers[1] = (registers[0])>>combo[operand]
+    registers[1] = (registers[0]) >> combo[operand]
 
 
 def cdv(operand):
     combo = list(range(4))+list(registers)
-    registers[2] = (registers[0])>>combo[operand]
+    registers[2] = (registers[0]) >> combo[operand]
 
 
 day = 17
@@ -73,7 +73,7 @@ while program_counter < len(program):
         program_counter += 2
 print('part 1: '+','.join(map(str, output)))
 
-targets = [7, 1, 4, 6, 2, 0, 1, 7, 5, 6, 4, 0, 0, 0, 6, 5][::-1] #reverted and XORed with 5, orig. program = 2,4,1,3,7,5,4,2,0,3,1,5,5,5,3,0
+targets = [p ^ 5 for p in program[::-1]]
 results = []
 
 def explore(acc, targets):
@@ -81,9 +81,9 @@ def explore(acc, targets):
         results.append(acc)
     else:
         for i in range(8):
-            A = (acc<<3)+i
-            B = i^3
-            B = (B ^ (A>>B))%8
+            A = (acc << 3)+i
+            B = i ^ 3
+            B = (B ^ (A >> B)) % 8
             if B == targets[0]:
                 explore(A, targets[1:])
 
@@ -108,7 +108,7 @@ print('part 2: '+str(sorted(results)[0]))
 #     # translated program
 #     while A != 0:
 #         B = ((A % 8) ^ 3)
-#         B = (B ^ (A>>B)) 
+#         B = (B ^ (A>>B))
 #         B = B^5
 #         if A == i:
 #             print(str(i) + ': ' + str(B) + ' ' + str(B % 8))
