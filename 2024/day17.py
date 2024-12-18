@@ -73,7 +73,7 @@ while program_counter < len(program):
         program_counter += 2
 print('part 1: '+','.join(map(str, output)))
 
-targets = [p ^ 5 for p in program[::-1]]
+targets = [p for p in program[::-1]]
 results = []
 
 def explore(acc, targets):
@@ -81,11 +81,15 @@ def explore(acc, targets):
         results.append(acc)
     else:
         for i in range(8):
-            A = (acc << 3)+i
-            B = i ^ 3
-            B = (B ^ (A >> B)) % 8
-            if B == targets[0]:
-                explore(A, targets[1:])
+            output.clear()
+            global registers
+            registers = list(orig_registers)
+            registers[0] = (acc << 3)+i
+            for program_counter in range(0, len(program), 2):
+                if not (program[program_counter] in [0,3]):
+                    ops[program[program_counter]](program[program_counter+1])
+            if output[0] == targets[0]:
+                explore(registers[0], targets[1:])
 
 explore(0, targets)
 print('part 2: '+str(sorted(results)[0]))
