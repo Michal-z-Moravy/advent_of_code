@@ -17,7 +17,7 @@ acc = 0
 acc2 = 0
 
 start = time.time()
-for l in lin:
+for i, l in enumerate(lin):
     tmp = list(map(int, l.split(',')))
 
 print('part 1: '+str(acc))
