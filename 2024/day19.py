@@ -38,7 +38,7 @@ for i, l in enumerate(lin):
         tmp = TryTowels(l)
         if tmp != 0:
             acc1 += 1
-        acc2 += TryTowels(l)
+        acc2 += tmp
 
 print('part 1: '+str(acc1))
 print('part 2: '+str(acc2))
