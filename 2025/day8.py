@@ -20,15 +20,11 @@ def get_dist(box1, box2):
 def part1():
     components = np.zeros(len(lin))
     component_id = 1
-    used_pairs = []
     dist_list = []
     for n1 in range(len(lin)):
         for n2 in range(n1, len(lin)):
             if n1 != n2:
-                if not (tuple(sorted((n1, n2))) in used_pairs):
-                    used_pairs.append(tuple(sorted((n1, n2))))
-                    dist_list.append(
-                        (tuple(sorted((n1, n2))), get_dist(lin[n1], lin[n2])))
+                dist_list.append(((n1, n2), get_dist(lin[n1], lin[n2])))
     dist_list.sort(key=lambda index: index[1])
     for i in range(10):
         print(lin[dist_list[i][0][0]] + ' - ' + lin[dist_list[i][0][1]])
