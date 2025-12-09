@@ -10,11 +10,12 @@ import matplotlib.pyplot as plt
 
 # @functools.lru_cache(maxsize=128, typed=False)
 
+
 def part1():
     val = 50
     acc = 0
     for l in lin:
-        if l[0]=='L':
+        if l[0] == 'L':
             val -= int(l[1:])
         else:
             val += int(l[1:])
@@ -23,12 +24,13 @@ def part1():
             acc += 1
     return acc
 
-def part2(): # bruteforce - TODO: improve
+
+def part2():  # bruteforce - TODO: improve
     val = 50
     acc = 0
     for l in lin:
         mult = 1
-        if l[0]=='L':
+        if l[0] == 'L':
             mult = -1
         for i in range(int(l[1:])):
             val += mult
@@ -37,8 +39,8 @@ def part2(): # bruteforce - TODO: improve
                 acc += 1
     return acc
 
-day = 1
-lin = [l.replace('\n', '') for l in util.get_input(day)]
+
+lin = [l.replace('\n', '') for l in util.get_input(2025, 1)]
 start = time.time()
 
 print('part 1: '+str(part1()))

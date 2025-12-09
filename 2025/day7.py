@@ -39,8 +39,7 @@ def part1_2():
     return (acc)
 
 
-day = 7
-lin = [l.replace('\n', '') for l in util.get_input(day)]
+lin = [l.replace('\n', '') for l in util.get_input(2025, 7)]
 start = time.time()
 
 part2_acc = 0

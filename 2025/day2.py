@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 # @functools.lru_cache(maxsize=128, typed=False)
 
+
 def check_num(n, loop_bound):
     test_value = str(n)
     for l in range(2, loop_bound):
@@ -24,6 +25,7 @@ def check_num(n, loop_bound):
                 return True
     return False
 
+
 def part1():
     acc = 0
     to_check = lin[0].split(',')
@@ -34,6 +36,7 @@ def part1():
                 if check_num(i, 3):
                     acc += i
     return acc
+
 
 def part2():
     acc = 0
@@ -46,8 +49,7 @@ def part2():
     return acc
 
 
-day = 2
-lin = [l.replace('\n', '') for l in util.get_input(day)]
+lin = [l.replace('\n', '') for l in util.get_input(2025, 2)]
 start = time.time()
 
 print('part 1: '+str(part1()))

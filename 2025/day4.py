@@ -70,8 +70,7 @@ def part2():
     return acc
 
 
-day = 4
-lin = [l.replace('\n', '') for l in util.get_input(day)]
+lin = [l.replace('\n', '') for l in util.get_input(2025, 4)]
 lin2 = [list(l) for l in lin]
 start = time.time()
 

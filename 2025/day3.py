@@ -63,8 +63,7 @@ def part2():
     return acc
 
 
-day = 3
-lin = [l.replace('\n', '') for l in util.get_input(day)]
+lin = [l.replace('\n', '') for l in util.get_input(2025, 3)]
 start = time.time()
 
 line_values = dict()

@@ -82,14 +82,15 @@ def part1_2():
         if components.sum() == len(lin):
             # print(lin[n1] + ' - ' + lin[n2])
             # print('components: '+str(components))
-            print('part 2: '+str(int(lin[n1].split(',')[0])*int(lin[n2].split(',')[0])))
+            print('part 2: ' +
+                  str(int(lin[n1].split(',')[0])*int(lin[n2].split(',')[0])))
             break
         d += 1
 
     return acc
 
-day = 8
-lin = [l.replace('\n', '') for l in util.get_input(day)]
+
+lin = [l.replace('\n', '') for l in util.get_input(2025, 8)]
 start = time.time()
 
 part1_2()
