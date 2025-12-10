@@ -47,6 +47,25 @@ def part1():
 
 def part2():
     acc = 0
+    import pulp
+    for i in range(len(joltages)):
+        problem = pulp.LpProblem("Buttons_"+str(i), pulp.LpMinimize)
+        x_nums = list(range(len(action_lists[i])))
+        x = pulp.LpVariable.dicts(
+            "Toggles_"+str(i), x_nums, lowBound=0, cat='Integer')
+        problem += pulp.lpSum([x[j] for j in x_nums])
+        m = np.zeros([len(x_nums), len(joltages[i])])
+        for k in x_nums:
+            for l in action_lists[i][k]:
+                m[k][l] = 1
+        for k in range(len(joltages[i])):
+            problem += pulp.lpSum([x[j]*m[j][k]
+                                  for j in x_nums]) == joltages[i][k]
+        if pulp.LpStatus[problem.solve(pulp.PULP_CBC_CMD(msg=0))] == 'Optimal':
+            acc += pulp.value(problem.objective)
+        else:
+            print("!!! ERROR !!!")
+
     return acc
 
 
@@ -69,6 +88,6 @@ for l in lin:
         '['+tmp[0].replace(" ", ",").replace('(', 'tuple([').replace(')', '])')+']'))))
 
 print('part 1: '+str(part1()))
-print('part 2: '+str(part2()))
+print('part 2: '+str(int(part2())))
 end = time.time()
 print(end - start)
