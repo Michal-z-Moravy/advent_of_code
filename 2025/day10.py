@@ -22,18 +22,16 @@ def merge_actions(a1, a2) -> tuple:
 
 
 def process_line(i, target) -> int:
-    tmp_actions = set(action_lists[i])
-    tmp_action_costs = dict.fromkeys(tmp_actions, 1)
+    tmp_action_costs = dict.fromkeys(set(action_lists[i]), 1)
     while True:
-        if target in tmp_actions:
+        if target in tmp_action_costs.keys():
             return tmp_action_costs[target]
-        tmp_actions_L = list(tmp_actions)
+        tmp_actions_L = list(tmp_action_costs.keys())
         for x in range(len(tmp_actions_L)):
             for y in range(x+1, len(tmp_actions_L)):
                 action = merge_actions(tmp_actions_L[x], tmp_actions_L[y])
                 cost = tmp_action_costs[tmp_actions_L[x]
                                         ]+tmp_action_costs[tmp_actions_L[y]]
-                tmp_actions.add(action)
                 if (not (action in tmp_action_costs)) or (tmp_action_costs[action] > cost):
                     tmp_action_costs[action] = cost
 
