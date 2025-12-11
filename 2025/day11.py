@@ -12,20 +12,14 @@ import matplotlib.pyplot as plt
 @functools.lru_cache(maxsize=None, typed=True)
 def recurse_part2(node: str) -> int:
     if node.startswith('out-'):
-        if node == 'out-11':
-            return 1
-        else:
-            return 0
+        return 1 if (node == 'out-11') else 0
     else:
         return sum([recurse_part2(f'{n}-{"1" if((node[4]=="1")or(n=="fft")) else "0"}{"1" if((node[5]=="1")or(n=="dac")) else "0"}') for n in graph[node[:3]]])
 
 
 @functools.lru_cache(maxsize=None, typed=True)
 def recurse(node: str) -> int:
-    if node == 'out':
-        return 1
-    else:
-        return sum([recurse(n) for n in graph[node]])
+    return 1 if (node == 'out') else sum([recurse(n) for n in graph[node]])
 
 
 def part1():
